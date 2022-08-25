@@ -129,21 +129,23 @@ func (t *UI) UpdateUI(data []*metrics.Metrics, refreshInterval time.Duration) {
 	/* -------------------------------------------------------------------------- */
 	/*                                   ALERTS                                   */
 	/* -------------------------------------------------------------------------- */
-	// previous number of alerts
-	oldAlertRowsLen := len(t.Alerts.Rows)
+	t.Alerts.Rows = []string{}
 
 	// update alerts
 	for _, stat := range data {
-		if stat.Alert.WebsiteWasDown {
-			t.Alerts.Rows = append(t.Alerts.Rows, fmt.Sprintf("[Website %v is down. availability=%.2f, time=%v](fg:red)", stat.Url, stat.Alert.Availability, time.Now().Format("2006-01-02 15:04:05")))
+		if stat.Alert.WebsiteWasDown != nil {
+			t.Alerts.Rows = append(t.Alerts.Rows, fmt.Sprintf("[Website %v is down. availability=%.2f, time=%v](fg:red)", stat.Url, stat.Alert.Availability, stat.Alert.WebsiteWasDown.Format("2006-01-02 15:04:05")))
 		}
-		if stat.Alert.WebsiteHasRecovered {
-			t.Alerts.Rows = append(t.Alerts.Rows, fmt.Sprintf("[Website %v has recovered. availability=%.2f, time=%v](fg:green)", stat.Url, stat.Alert.Availability, time.Now().Format("2006-01-02 15:04:05")))
+		if stat.Alert.WebsiteWasDownFor > 0 {
+			msg := fmt.Sprintf(
+				"[Website %v has recovered after %s. availability=%.2f, time=%v](fg:green)",
+				stat.Url,
+				stat.Alert.WebsiteWasDownFor.String(),
+				stat.Alert.Availability,
+				time.Now().Format("2006-01-02 15:04:05"),
+			)
+			t.Alerts.Rows = append(t.Alerts.Rows, msg)
 		}
-	}
-	// if there's new alerts scrolldown
-	if len(t.Alerts.Rows) != oldAlertRowsLen {
-		t.Alerts.ScrollPageDown()
 	}
 
 	// Rerender widgets

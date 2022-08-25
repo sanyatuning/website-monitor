@@ -65,7 +65,7 @@ func parse() error {
 	tail := flag.Args()
 	if len(tail) > 0 && len(tail)%2 == 0 {
 		for i := 0; i < len(tail); i += 2 {
-			pollingInterval, err := strconv.Atoi(tail[i+1])
+			pollingInterval, err := strconv.ParseFloat(tail[i+1], 32)
 			if err != nil {
 				return fmt.Errorf("error converting polling interval %v to int", tail[i+1])
 			}
@@ -73,7 +73,7 @@ func parse() error {
 			if err != nil {
 				return err
 			}
-			config.UrlsPollingsIntervals[url] = time.Duration(pollingInterval) * time.Second
+			config.UrlsPollingsIntervals[url] = time.Duration(pollingInterval*1000) * time.Millisecond
 		}
 	} else {
 		fmt.Fprintf(os.Stderr, "\nUsage: %s [OPTIONS] URL1 POLLING_INTERVAL1 URL2 POLLING_INTERVAL2\n\n", os.Args[0])

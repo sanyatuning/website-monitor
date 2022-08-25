@@ -24,7 +24,8 @@ type Metrics struct {
 type Alert struct {
 	statuscodesc        chan int
 	Availability        float64
-	WebsiteWasDown      bool
+	WebsiteWasDown      *time.Time
+	WebsiteWasDownFor   time.Duration
 	WebsiteHasRecovered bool
 }
 
@@ -190,10 +191,18 @@ func (alert *Alert) update(newReport *inspect.Report) {
 	if oldAvailability < config.CriticalAvailability && alert.Availability >= config.CriticalAvailability {
 		alert.WebsiteHasRecovered = true
 	}
+	now := time.Now()
 	if newReport.StatusCode == 200 {
-		alert.WebsiteWasDown = false
+		if alert.WebsiteWasDown != nil {
+			alert.WebsiteWasDownFor = now.Sub(*alert.WebsiteWasDown)
+			alert.WebsiteWasDown = nil
+		}
 	} else {
-		alert.WebsiteWasDown = true
+		if alert.WebsiteWasDown == nil {
+			now := time.Now()
+			alert.WebsiteWasDown = &now
+			alert.WebsiteWasDownFor = 0
+		}
 	}
 }
 
