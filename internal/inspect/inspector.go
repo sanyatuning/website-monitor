@@ -3,8 +3,8 @@ package inspect
 import (
 	"time"
 
-	"github.com/NouamaneTazi/website-monitor/internal/config"
 	"github.com/gocolly/colly/v2"
+	"github.com/sanyatuning/website-monitor/internal/config"
 )
 
 // Inspector monitors an url every polling interval, and sends reports over `reportc` channel

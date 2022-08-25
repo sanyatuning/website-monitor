@@ -4,9 +4,9 @@ import (
 	"testing"
 	"time"
 
-	"github.com/NouamaneTazi/website-monitor/internal/config"
-	"github.com/NouamaneTazi/website-monitor/internal/inspect"
-	"github.com/NouamaneTazi/website-monitor/internal/metrics"
+	"github.com/sanyatuning/website-monitor/internal/config"
+	"github.com/sanyatuning/website-monitor/internal/inspect"
+	"github.com/sanyatuning/website-monitor/internal/metrics"
 )
 
 func initConfig() {
@@ -43,7 +43,7 @@ func TestAlerting(t *testing.T) {
 	if alert.WebsiteHasRecovered {
 		t.Error("Website must be initialized as not recovered")
 	}
-	if alert.WebsiteWasDown {
+	if alert.WebsiteWasDown != nil {
 		t.Error("Website must be initialized as not down")
 	}
 
@@ -56,7 +56,7 @@ func TestAlerting(t *testing.T) {
 			if alert.WebsiteHasRecovered {
 				t.Error("Phase 1: Website hasn't recovered yet")
 			}
-			if !alert.WebsiteWasDown {
+			if alert.WebsiteWasDown == nil {
 				t.Error("Phase 1: Website was down")
 			}
 			met.Mu.RUnlock()
@@ -70,7 +70,7 @@ func TestAlerting(t *testing.T) {
 			if alert.WebsiteHasRecovered {
 				t.Error("Phase 2: Website hasn't recovered yet")
 			}
-			if alert.WebsiteWasDown {
+			if alert.WebsiteWasDown != nil {
 				t.Error("Phase 2: Website wasn't down")
 			}
 			met.Mu.RUnlock()
@@ -83,7 +83,7 @@ func TestAlerting(t *testing.T) {
 		if !alert.WebsiteHasRecovered {
 			t.Error("Phase 3: Website has recovered")
 		}
-		if alert.WebsiteWasDown {
+		if alert.WebsiteWasDown != nil {
 			t.Error("Phase 3: Website wasn't down")
 		}
 		met.Mu.RUnlock()
@@ -97,7 +97,7 @@ func TestAlerting(t *testing.T) {
 				t.Error("Phase 4: Website hasn't recovered")
 			}
 
-			if alert.WebsiteWasDown {
+			if alert.WebsiteWasDown != nil {
 				t.Error("Phase 4: Website wasn't down")
 			}
 			met.Mu.RUnlock()

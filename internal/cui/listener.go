@@ -3,9 +3,9 @@ package cui
 import (
 	"time"
 
-	"github.com/NouamaneTazi/website-monitor/internal/config"
-	"github.com/NouamaneTazi/website-monitor/internal/metrics"
 	"github.com/gizak/termui/v3"
+	"github.com/sanyatuning/website-monitor/internal/config"
+	"github.com/sanyatuning/website-monitor/internal/metrics"
 )
 
 // handleCUI creates CUI and handles keyboardBindings

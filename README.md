@@ -39,7 +39,7 @@ This command starts monitoring of the websites:
 
 ### Precompiled binaries
 
-Precompiled binaries for released versions are available in for each platform in the [packages section](https://github.com/NouamaneTazi/website-monitor/releases/)
+Precompiled binaries for released versions are available in for each platform in the [packages section](https://github.com/sanyatuning/website-monitor/releases/)
 
 ### Building from source
 
@@ -48,7 +48,7 @@ Go environment with [version 1.15 or greater installed](https://golang.org/doc/i
 
 You can directly use the `go` tool to download and install the `website-monitor` tool into your `GOPATH`:
 
-    go get -v github.com/NouamaneTazi/website-monitor
+    go get -v github.com/sanyatuning/website-monitor
 
 ## Usage
 

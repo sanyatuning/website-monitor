@@ -6,8 +6,8 @@ import (
 	"strings"
 	"time"
 
-	"github.com/NouamaneTazi/website-monitor/internal/config"
-	"github.com/NouamaneTazi/website-monitor/internal/metrics"
+	"github.com/sanyatuning/website-monitor/internal/config"
+	"github.com/sanyatuning/website-monitor/internal/metrics"
 
 	ui "github.com/gizak/termui/v3"
 	"github.com/gizak/termui/v3/widgets"

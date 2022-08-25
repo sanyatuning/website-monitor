@@ -1,4 +1,4 @@
-module github.com/NouamaneTazi/website-monitor
+module github.com/sanyatuning/website-monitor
 
 go 1.15
 
